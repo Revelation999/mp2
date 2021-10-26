@@ -3,13 +3,13 @@ This is MP2.
 
 Authors: Steve Huang, Asher Kang, Maria Ringes. 
 
-# How to Run 
-## 1. Clone the Repository
+## How to Run 
+### 1. Clone the Repository
 
-# Screenshots 
+## Screenshots 
 
-# Workflow
+## Workflow
 
-# Custom Data Structures
+## Custom Data Structures
 
-# References 
+## References 
