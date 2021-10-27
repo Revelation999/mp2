@@ -1,5 +1,6 @@
 # MP2
 MP2 uses Go-channels and Go-routines to simulate mining and tamper-resistant log.
+It implements Bitcoin: https://github.com/bitcoin/bitcoin
 
 Authors: Steve Huang, Asher Kang, Maria Ringes. 
 
