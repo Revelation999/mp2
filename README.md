@@ -1,5 +1,5 @@
 # MP2
-This is MP2.
+MP2 uses Go-channels and Go-routines to simulate mining and tamper-resistant log.
 
 Authors: Steve Huang, Asher Kang, Maria Ringes. 
 
