@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"crypto/sha256"
+	"fmt"
+	"math"
 	"time"
 	"unsafe"
 )
@@ -54,28 +56,44 @@ func newBlock(nonce int, provider string, prevBlock Block) Block {
 	return Block{newHeader, transaction}
 }
 
-func (l Logger) UpdateBlock(nonce int, provider string, miners []Miner) {
+func (l *Logger) UpdateBlock(nonce int, provider string, miners []Miner) {
 	l.block = newBlock(nonce, provider, l.block)
+	fmt.Print("New block available: ")
+	fmt.Println(l.block)
 	l.currBlockHash = sha256.Sum256(HeaderToByteSlice(l.block.blockHeader))
+	fmt.Print("Hash of current block: ")
+	fmt.Println(l.currBlockHash)
 	for i := 0; i < len(miners); i++ {
 		*miners[i].mailbox <- l.block
+	}
+	for len(*l.mailbox) > 0 {
+		<-*l.mailbox
 	}
 }
 
 func (l Logger) CheckNonce(nonce int) bool {
 	hashOutput := sha256.Sum256(append(l.currBlockHash[:], IntToByteSlice(nonce)...))
-	return bytes.Compare(hashOutput[:], l.block.blockHeader.bits[:]) < 0
+	return Compare(hashOutput[:], l.block.blockHeader.bits[:]) < 0
 }
 
 func (l Logger) ListenForUpdate(miners []Miner) {
+	fmt.Println("Logger initiated.")
 	for true {
 		select {
 		case msg := <-*l.mailbox:
 			if l.CheckNonce(msg.nonce) {
+				fmt.Print("Miner " + msg.identity + " has done it. It has found the value of ")
+				fmt.Println(msg.nonce)
+				fmt.Print("which generated a hash value of ")
+				fmt.Println(sha256.Sum256(append(l.currBlockHash[:], IntToByteSlice(msg.nonce)...)))
 				l.UpdateBlock(msg.nonce, msg.identity, miners)
 			}
 		default:
 			continue
+		}
+		if time.Since(start).Nanoseconds() > TimeLimit {
+			fmt.Println("Logger terminated at the 5 min mark.")
+			break
 		}
 	}
 }
@@ -123,4 +141,15 @@ func Int64ToByteSlice(num int64) []byte {
 		}
 	}
 	return slice
+}
+
+func Compare(a, b []byte) int {
+	for i := 0; i < int(math.Abs(float64(len(a)-len(b)))); i++ {
+		if len(a) < len(b) {
+			a = append([]byte{0}, a...)
+		} else {
+			b = append([]byte{0}, b...)
+		}
+	}
+	return bytes.Compare(a, b)
 }
