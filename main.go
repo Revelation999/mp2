@@ -10,7 +10,7 @@ import (
 var logger Logger
 var miners []Miner
 
-const TimeLimit = 300_000_000_000
+const TimeLimit = 300_000_000_000 // sets mining time limit to 5 minutes (300,000,000,000 nanoseconds)
 
 var start time.Time
 
@@ -48,7 +48,8 @@ func PrettyPrintBlock(blocktoprint *Block) {
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 }
 
-func main() {
+// initializes logger and miner
+func initializeBlockchain() (int, Block) {
 	fmt.Println("\nWelcome! Thank you for starting the program.\n")
 	emptyBlock := Block{}
 	genesisBlock := Genesis(&emptyBlock)
@@ -57,12 +58,18 @@ func main() {
 	minerLength := 3
 	logChannel := make(chan Message, 1000000)
 	mineChannels := make([]chan Block, minerLength)
+
+	// initialize miner channels
 	for i := 0; i < minerLength; i++ {
 		mineChannels[i] = make(chan Block, 1)
 	}
+
+	// initialize logger
 	logger = Logger{genesisBlock,
 		sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)),
 		&logChannel}
+
+	// initialize miners
 	miners = make([]Miner, minerLength)
 	for i := 0; i < minerLength; i++ {
 		miners[i] = Miner{string([]byte{byte(66 + i)}),
@@ -71,6 +78,11 @@ func main() {
 			sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)),
 		}
 	}
+	return minerLength, genesisBlock
+}
+
+// initiate mining process
+func startMining(minerLength int, genesisBlock Block) {
 	start = time.Now()
 	fmt.Println("\nMiners will now attempt to solve the puzzle given the following hash value:")
 	fmt.Println(sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)), "\n")
@@ -79,4 +91,9 @@ func main() {
 		go miners[i].Mine(logger)
 	}
 	time.Sleep(TimeLimit * time.Nanosecond)
+}
+
+func main() {
+	minerLength, genesisBlock := initializeBlockchain()
+	startMining(minerLength, genesisBlock)
 }
