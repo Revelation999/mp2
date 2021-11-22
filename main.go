@@ -38,13 +38,24 @@ func Genesis(emptyBlock *Block) Block {
 	return Block{newHeader, "initiate"}
 }
 
+func PrettyPrintBlock(blocktoprint *Block) {
+	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+	fmt.Println(" | version: \t\t", blocktoprint.blockHeader.version)
+	fmt.Println(" | prevBlckHashPointer: ", blocktoprint.blockHeader.prevBlockHashPointer)
+	fmt.Println(" | time:    \t\t", blocktoprint.blockHeader.time)
+	fmt.Println(" | bits:    \t\t", blocktoprint.blockHeader.bits)
+	fmt.Println(" | nonce:   \t\t", blocktoprint.blockHeader.nonce)
+	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+}
+
 // initializes logger and miner
 func initializeBlockchain() (int, Block) {
-	fmt.Println("Program starting...")
+	fmt.Println("\nWelcome! Thank you for starting the program.\n")
 	emptyBlock := Block{}
 	genesisBlock := Genesis(&emptyBlock)
-	fmt.Println("This code is reached.")
-	minerLength := 1
+	fmt.Println("The first block has been created.")
+	PrettyPrintBlock(&genesisBlock)
+	minerLength := 3
 	logChannel := make(chan Message, 1000000)
 	mineChannels := make([]chan Block, minerLength)
 
@@ -73,8 +84,8 @@ func initializeBlockchain() (int, Block) {
 // initiate mining process
 func startMining(minerLength int, genesisBlock Block) {
 	start = time.Now()
-	fmt.Println(genesisBlock.blockHeader.bits)
-	fmt.Println(sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)))
+	fmt.Println("\nMiners will now attempt to solve the puzzle given the following hash value:")
+	fmt.Println(sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)), "\n")
 	go logger.ListenForUpdate(miners)
 	for i := 0; i < minerLength; i++ {
 		go miners[i].Mine(logger)
