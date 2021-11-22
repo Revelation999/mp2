@@ -38,7 +38,8 @@ func Genesis(emptyBlock *Block) Block {
 	return Block{newHeader, "initiate"}
 }
 
-func main() {
+// initializes logger and miner
+func initializeBlockchain() (int, Block) {
 	fmt.Println("Program starting...")
 	emptyBlock := Block{}
 	genesisBlock := Genesis(&emptyBlock)
@@ -46,12 +47,18 @@ func main() {
 	minerLength := 1
 	logChannel := make(chan Message, 1000000)
 	mineChannels := make([]chan Block, minerLength)
+
+	// initialize miner channels
 	for i := 0; i < minerLength; i++ {
 		mineChannels[i] = make(chan Block, 1)
 	}
+
+	// initialize logger
 	logger = Logger{genesisBlock,
 		sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)),
 		&logChannel}
+
+	// initialize miners
 	miners = make([]Miner, minerLength)
 	for i := 0; i < minerLength; i++ {
 		miners[i] = Miner{string([]byte{byte(66 + i)}),
@@ -60,6 +67,11 @@ func main() {
 			sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)),
 		}
 	}
+	return minerLength, genesisBlock
+}
+
+// initiate mining process
+func startMining(minerLength int, genesisBlock Block) {
 	start = time.Now()
 	fmt.Println(genesisBlock.blockHeader.bits)
 	fmt.Println(sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)))
@@ -68,4 +80,9 @@ func main() {
 		go miners[i].Mine(logger)
 	}
 	time.Sleep(TimeLimit * time.Nanosecond)
+}
+
+func main() {
+	minerLength, genesisBlock := initializeBlockchain()
+	startMining(minerLength, genesisBlock)
 }
