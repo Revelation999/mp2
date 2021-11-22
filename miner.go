@@ -14,13 +14,11 @@ type Miner struct {
 }
 
 func (m Miner) Mine(l Logger) {
-	fmt.Println("Miner " + m.identity + " initiated.")
-	//fmt.Println(m.currBlockHash)
+	fmt.Println("Miner " + m.identity + " has begun mining.")
 	i := 1
 	for true {
 		if m.HasUpdate() {
-			fmt.Print("Update Received: ")
-			fmt.Println(m.currBlockHash)
+			fmt.Print("Miner " + m.identity + " has received a new puzzle.\n")
 			i = 1
 		}
 		hashOutput := sha256.Sum256(append(m.currBlockHash[:], IntToByteSlice(i)...))

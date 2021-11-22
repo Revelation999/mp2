@@ -58,11 +58,11 @@ func newBlock(nonce int, provider string, prevBlock Block) Block {
 
 func (l *Logger) UpdateBlock(nonce int, provider string, miners []Miner) {
 	l.block = newBlock(nonce, provider, l.block)
-	fmt.Print("New block available: ")
-	fmt.Println(l.block)
+	fmt.Println("The following block has been added to the blockchain: ")
+	PrettyPrintBlock(&l.block)
 	l.currBlockHash = sha256.Sum256(HeaderToByteSlice(l.block.blockHeader))
-	fmt.Print("Hash of current block: ")
-	fmt.Println(l.currBlockHash)
+	fmt.Println("\nMiners should now attempt to solve the puzzle given the following updated hash value: ")
+	fmt.Println(l.currBlockHash, "\n")
 	for i := 0; i < len(miners); i++ {
 		*miners[i].mailbox <- l.block
 	}
@@ -77,15 +77,14 @@ func (l Logger) CheckNonce(nonce int) bool {
 }
 
 func (l Logger) ListenForUpdate(miners []Miner) {
-	fmt.Println("Logger initiated.")
+	fmt.Println("Logger has begun listening for new updates.")
 	for true {
 		select {
 		case msg := <-*l.mailbox:
 			if l.CheckNonce(msg.nonce) {
-				fmt.Print("Miner " + msg.identity + " has done it. It has found the value of ")
-				fmt.Println(msg.nonce)
-				fmt.Print("which generated a hash value of ")
-				fmt.Println(sha256.Sum256(append(l.currBlockHash[:], IntToByteSlice(msg.nonce)...)))
+				fmt.Println("\n\n! ! ! ! A NEW BLOCK HAS BEEN FOUND BY MINER ", msg.identity, " ! ! ! !")
+				fmt.Println("Miner " + msg.identity + " solved the puzzle with a nonce value of", msg.nonce, ".")
+				fmt.Println("This nonce generated a hash value of ", sha256.Sum256(append(l.currBlockHash[:], IntToByteSlice(msg.nonce)...)))
 				l.UpdateBlock(msg.nonce, msg.identity, miners)
 			}
 		default:
