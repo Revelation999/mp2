@@ -10,7 +10,7 @@ import (
 var logger Logger
 var miners []Miner
 
-const TimeLimit = 300_000_000_000
+const TimeLimit = 300_000_000_000 // sets mining time limit to 5 minutes (300,000,000,000 nanoseconds)
 
 var start time.Time
 
