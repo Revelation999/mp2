@@ -38,6 +38,9 @@ The Miners have 2 methods that define their behavior.
 
 Our program accounts for the Byzantine fault of a miner sending a bogus solution to the logger. The logger's CheckNonce() function returns a boolean false value of 0 if the miner's proposed solution does not solve the puzzle.
 
+The following screenshot shows an example run where the a miner proposes a nonce that does not satisfy the puzzle. In this example, we have reversed the compare statement such that as long as the hash value using the proposed nonce is greater than the difficulty, we send the guessed nonce value to the mailbox of the logger. As you can see, this does not force any block update and will just have the miner continue trying other values, hence the repetitive sends to the mailbox of the logger.
+<img width="1113" alt="Screen Shot 2021-11-22 at 10 11 12 PM" src="https://user-images.githubusercontent.com/60116121/142965989-42721649-4112-4d80-9bbc-da681b8ef74d.png">
+
 #### Crash Stop 
 
 ## Similarities to the Official Bitcoin Repository
@@ -54,9 +57,6 @@ Our program accounts for the Byzantine fault of a miner sending a bogus solution
 ## Screenshot
 The following screenshot shows an example run with a set difficulty of 2^240. This example consists of 5 miners (B, C, D, E & F).
 <img width="1113" alt="Screen Shot 2021-11-22 at 8 59 48 PM" src="https://user-images.githubusercontent.com/60116121/142960948-c31c652b-dfdb-4967-9712-397ee753a11a.png">
-
-The following screenshot shows an example run where the a miner proposes a nonce that does not satisfy the puzzle. In this example, we have reversed the compare statement such that as long as the hash value using the proposed nonce is greater than the difficulty, we send the guessed nonce value to the mailbox of the logger. As you can see, this does not force any block update and will just have the miner continue trying other values, hence the repetitive sends to the mailbox of the logger.
-<img width="1113" alt="Screen Shot 2021-11-22 at 10 11 12 PM" src="https://user-images.githubusercontent.com/60116121/142965989-42721649-4112-4d80-9bbc-da681b8ef74d.png">
 
 ## Workflow
 ![MP2 - Main Workflow](https://user-images.githubusercontent.com/60116121/142963455-08cd1f29-0789-4d64-9d5b-04bc609093ea.png)
