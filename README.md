@@ -39,12 +39,16 @@ The Miners have 2 methods that define their behavior.
 Our program accounts for the Byzantine fault of a miner sending a bogus solution to the logger. The logger's CheckNonce() function returns a boolean false value of 0 if the miner's proposed solution does not solve the puzzle.
 
 ## Similarities to the Official Bitcoin Repository
+The following are screenshots of code from the Bitcoin repository. These lines served as inspiration for our implementation of MP2. 
 
-### Block Headers -- (From src>chain.h)
+### Block Header Structure -- (From src>chain.h)
 ![blockheader](https://user-images.githubusercontent.com/15258611/142967019-4730c17c-e27d-4d4e-be98-49514f48f757.png)
 
 ### Creation of Genesis Block -- (From src>chainparams.cpp)
 ![genesis](https://user-images.githubusercontent.com/15258611/142967796-dab5b4a0-4121-429d-af29-9fc58e6ea7c1.png)
+
+### SHA256 Hash Function -- (From src>hash.h)
+![sha256](https://user-images.githubusercontent.com/15258611/142968387-d4863fdb-d5e6-42b7-85fd-42c7ed174e62.png)
 
 ### Mining: Nonce guess incrementation -- (From src>miner.cpp)
 ![Mining](https://user-images.githubusercontent.com/15258611/142966827-a2c33b27-936d-4319-8c36-e6970d1b9f74.png)
