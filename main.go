@@ -15,6 +15,11 @@ const TimeLimit = 300_000_000_000 // sets mining time limit to 5 minutes (300,00
 var newpuzzle time.Time
 var start time.Time
 
+/*
+	@input emptyBlock // An empty block that will serve as the first block of the chain
+	@output Block // A block with an initial newHeader and the transaction "initiate"
+	Genesis is a function that initializes the first block of a blockchain
+*/
 func Genesis(emptyBlock *Block) Block {
 	var hash [32]byte
 	for i := 0; i < 32; i++ {
@@ -46,6 +51,10 @@ func Genesis(emptyBlock *Block) Block {
 	return Block{newHeader, "initiate"}
 }
 
+/*
+	@input blockToPrint // A block that will be parsed to print
+	PrettyPrintBlock is a function that will print out the contents of a block in a clean format
+*/
 func PrettyPrintBlock(blockToPrint *Block) {
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 	fmt.Println(" | version: \t\t", blockToPrint.blockHeader.version)
@@ -58,7 +67,12 @@ func PrettyPrintBlock(blockToPrint *Block) {
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 }
 
-// initializes logger and miner
+/*
+	@output minerLength // An integer value that will say how many miners there are
+			genesisBlock // A Block instance that will serve as the first well constructed block in the blockchain
+	InitializeBlockChain is a function that will ask the user how many miners they would like to simulate.
+	This function will also initialize the logger, the miners, as well as the channel of the logger and those of the miners
+*/
 func initializeBlockchain() (int, Block) {
 	fmt.Println("\nWelcome! Thank you for starting the program.\n")
 	emptyBlock := Block{}
@@ -75,17 +89,17 @@ func initializeBlockchain() (int, Block) {
 	logChannel := make(chan Message, 1000000)
 	mineChannels := make([]chan Block, minerLength)
 
-	// initialize miner channels
+	// Initialize Miner Channels
 	for i := 0; i < minerLength; i++ {
 		mineChannels[i] = make(chan Block, 1)
 	}
 
-	// initialize logger
+	// Initialize Logger object
 	logger = Logger{genesisBlock,
 		sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)),
 		&logChannel}
 
-	// initialize miners
+	// Initialize miners
 	miners = make([]Miner, minerLength)
 	for i := 0; i < minerLength; i++ {
 		miners[i] = Miner{string([]byte{byte(66 + i)}),
@@ -97,7 +111,11 @@ func initializeBlockchain() (int, Block) {
 	return minerLength, genesisBlock
 }
 
-// initiate mining process
+/*
+	@input minerLength // The number of miners that the blockchain will simulate with
+		   genesisBlock // A block that the Miners will derive their first puzzle from
+	startMining is a function that will capture the current time after initiation and will initialize the goRoutines for both the miners and the logger
+*/
 func startMining(minerLength int, genesisBlock Block) {
 	start = time.Now()
 	newpuzzle = time.Now()
