@@ -9,7 +9,7 @@ Authors: Steve Huang, Asher Kang, Maria Ringes.
 
 ## Specification of Program Behavior
 
-### Logger
+### Logger and Tamper-Resistant Log (Blockchain)
 The Logger has 4 methods that define its behavior. 
 
 1) `newBlock()` appends the newly approved block onto the blockchain. 
@@ -17,16 +17,11 @@ The Logger has 4 methods that define its behavior.
 3) `CheckNonce()` confirms whether the proposed puzzle solution fits the target difficulty value. 
 4) `ListenForUpdate()` runs in a `Go-routine` and calls `CheckNonce()` on any proposed puzzle solution that is sent by a miner into the logger’s channel. 
 
-### Miners 
+### Miners and Mining (Puzzle Solving)
 The Miners have 2 methods that define their behavior.
 
 1) `Mine()` runs in a `Go-routine` and houses the main life-cycle of the miner. It calls `HasUpdate()` to check for new blocks from the logger. It repeatedly tries int values as a nonce to solve the puzzle, starting with value 1 and incrementing by 1. Finally, it terminates if the blockchain has been preserved for 5 minutes. 
 2) `HasUpdate()` checks the miner’s channel for a new block sent from the logger. If it has received a new block, the method returns true. Otherwise, it returns false. 
-
-
-### Puzzle Solving (Mining)
-
-### Tamper-resistant Log (Blockchain)
 
 ### Supported Faulty Behavior 
 
