@@ -39,13 +39,13 @@ func Genesis(emptyBlock *Block) Block {
 	return Block{newHeader, "initiate"}
 }
 
-func PrettyPrintBlock(blocktoprint *Block) {
+func PrettyPrintBlock(blockToPrint *Block) {
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-	fmt.Println(" | version: \t\t", blocktoprint.blockHeader.version)
-	fmt.Println(" | prevBlckHashPointer: ", blocktoprint.blockHeader.prevBlockHashPointer)
-	fmt.Println(" | time:    \t\t", blocktoprint.blockHeader.time)
-	fmt.Println(" | bits:    \t\t", blocktoprint.blockHeader.bits)
-	fmt.Println(" | nonce:   \t\t", blocktoprint.blockHeader.nonce)
+	fmt.Println(" | version: \t\t", blockToPrint.blockHeader.version)
+	fmt.Println(" | prevBlockHashPointer: ", blockToPrint.blockHeader.prevBlockHashPointer)
+	fmt.Println(" | time:    \t\t", blockToPrint.blockHeader.time)
+	fmt.Println(" | bits:    \t\t", blockToPrint.blockHeader.bits)
+	fmt.Println(" | nonce:   \t\t", blockToPrint.blockHeader.nonce)
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 }
 
