@@ -54,7 +54,7 @@ The following screenshot shows an example run with a set difficulty of 2^240. Th
 <img width="1113" alt="Screen Shot 2021-11-22 at 8 59 48 PM" src="https://user-images.githubusercontent.com/60116121/142960948-c31c652b-dfdb-4967-9712-397ee753a11a.png">
 
 **Proposal of False Puzzle Solution**
-The following screenshot shows an example run where the a miner proposes a nonce that does not satisfy the puzzle. In this example, we have reversed the compare statement such that as long as the hash value using the proposed nonce is greater than the difficulty, we send the guessed nonce value to the mailbox of the logger. As you can see, this does not force any block update and will just have the miner continue trying other values, hence the repetitive sends to the mailbox of the logger.
+The following screenshot shows an example run where a miner (here, Miner E) proposes a nonce that does not satisfy the puzzle. In this example, we have reversed the compare statement such that as long as the hash value using the proposed nonce is greater than the difficulty, we send the guessed nonce value to the mailbox of the logger. As you can see, this does not force any block update and will just have the miner continue trying other values, hence the repetitive sends to the mailbox of the logger.
 <img width="1113" alt="Screen Shot 2021-11-22 at 10 11 12 PM" src="https://user-images.githubusercontent.com/60116121/142965989-42721649-4112-4d80-9bbc-da681b8ef74d.png">
 
 ## Workflow
