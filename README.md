@@ -40,6 +40,7 @@ Our program accounts for the Byzantine fault of a miner sending a bogus solution
 ### Mining
 
 ## Screenshot
+The following screenshot shows an example run with a set difficulty of 2^240. This example consists of 5 miners (B, C, D, E & F).
 <img width="1113" alt="Screen Shot 2021-11-22 at 8 59 48 PM" src="https://user-images.githubusercontent.com/60116121/142960948-c31c652b-dfdb-4967-9712-397ee753a11a.png">
 s 
 
