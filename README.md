@@ -15,7 +15,7 @@ Authors: Steve Huang, Asher Kang, Maria Ringes.
 
 ### Puzzle Solving (Mining)
 
-### Tamper-resistant Log
+### Tamper-resistant Log (Blockchain)
 
 ## Screenshots 
 
