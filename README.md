@@ -5,7 +5,7 @@ Authors: Steve Huang, Asher Kang, Maria Ringes.
 
 ## How to Run 
 #### Step 1: Clone Git Repository
-Clone the following git repository with `git clone https://github.com/standardrhyme/mp2`.
+Clone the following git repository with `git clone https://github.com/Revelation999/mp2`.
 
 #### Step 2: Begin Bitcoin/Blockchain Implementation
 Change the current directory into the recently cloned `mp2` folder. Start the Bitcoin/Blockchain protocol with `go run mp2`. 
