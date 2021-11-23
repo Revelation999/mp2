@@ -7,6 +7,14 @@ Authors: Steve Huang, Asher Kang, Maria Ringes.
 ## How to Run 
 ### 1. Clone Github Repository
 
+## Specification of Program Behavior
+
+### Logger
+
+### Miners 
+
+### Puzzle Solving (Mining)
+
 ## Screenshots 
 
 ## Workflow
