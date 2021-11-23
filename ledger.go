@@ -14,7 +14,7 @@ type Logger struct {
 
 func NewBlock(nonce int, provider string, prevBlock Block) Block {
 	var prevBlockHashPointer HashPointer
-	prevBlockHashPointer.hash = sha256.Sum256(HeaderToByteSlice(prevBlock.blockHeader)) // should we include the transaction?
+	prevBlockHashPointer.hash = sha256.Sum256(HeaderToByteSlice(prevBlock.blockHeader)) 
 	prevBlockHashPointer.ptr = &prevBlock
 	var newHeader BlockHeader
 	newHeader.version = prevBlock.blockHeader.version

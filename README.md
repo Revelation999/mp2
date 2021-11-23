@@ -12,19 +12,20 @@ Change the current directory into the recently cloned `mp2` folder. Start the Bi
 
 
 #### Step 3: Interact with Command Line
-A) **Difficulty Level** -- The program will ask the user to enter an `n` value between 0 and 32 such that the difficulty level is set to 2^(256-8n). The larger the value `n`, the smaller the difficulty level will be. A smaller difficulty level will make the puzzle harder for the miners to solve.
+A) **Difficulty Level** -- The program will ask the user to enter an `n` value between (and including) 0 and 32 such that the difficulty level is set to 2^(256-8n). The larger the value `n`, the smaller the difficulty level will be. A smaller difficulty level will make the puzzle harder for the miners to solve.
 
 B) **Number of Miners** -- The program will ask the user how many miners to simulate in the blockchain. This integer should be greater than 0.
 
 ## Specification of Program Behavior
 
 ### Logger and Tamper-Resistant Log (Blockchain)
-The Logger has 4 methods that define its behavior. 
+The Logger has 3 methods that define its behavior. 
 
-1) `newBlock()` appends the newly approved block onto the blockchain. 
-2) `UpdateBlock()` creates the next to-be-solved block on the blockchain and sends it to all the miners to be mined. 
-3) `CheckNonce()` confirms whether the proposed puzzle solution fits the target difficulty value. 
-4) `ListenForUpdate()` runs in a `Go-routine` and calls `CheckNonce()` on any proposed puzzle solution that is sent by a miner into the logger’s channel. 
+1) `UpdateBlock()` creates the next to-be-solved block on the blockchain and sends it to all the miners to be mined. 
+2) `CheckNonce()` confirms whether the proposed puzzle solution fits the target difficulty value. 
+3) `ListenForUpdate()` runs in a `Go-routine` and calls `CheckNonce()` on any proposed puzzle solution that is sent by a miner into the logger’s channel. 
+
+The Blockchain is a chain of `Block structs` that are linked together by `HashPointer struct`s. Each HashPointer contains the unique hash value of its Block's `BlockHeader` fields, as well as a pointer to the `Block`. 
 
 ### Miners and Mining (Puzzle Solving)
 The Miners have 2 methods that define their behavior.
@@ -32,21 +33,28 @@ The Miners have 2 methods that define their behavior.
 1) `Mine()` runs in a `Go-routine` and houses the main life-cycle of the miner. It calls `HasUpdate()` to check for new blocks from the logger. It repeatedly tries int values as a nonce to solve the puzzle, starting with value 1 and incrementing by 1. Finally, it terminates if the blockchain has been preserved for 5 minutes. 
 2) `HasUpdate()` checks the miner’s channel for a new block sent from the logger. If it has received a new block, the method returns true. Otherwise, it returns false. 
 
+At the beginning of the program, the user inputs the difficulty of the mining puzzles. This difficulty is represented as the `bits` value in each `BlockHeader`. At the creation of a new block, each miner is notified by the logger of this new block and the beginning of a new puzzle. Each miner begins guessing a nonce value whose combined hash value with its `BlockHeader` hash value matches the target difficulty level. 
+
 ### Supported Faulty Behavior 
 
 #### Byzantine (Bogus solution)
 
 Our program accounts for the Byzantine fault of a miner sending a bogus solution to the logger. The logger's CheckNonce() function returns a boolean false value of 0 if the miner's proposed solution does not solve the puzzle.
 
-#### Crash Stop 
-
 ## Similarities to the Official Bitcoin Repository
+The following are screenshots of code from the Bitcoin repository. These lines served as inspiration for our implementation of MP2. 
 
-### Block Headers
+### Block Header Structure -- (From src>chain.h)
+![blockheader](https://user-images.githubusercontent.com/15258611/142967019-4730c17c-e27d-4d4e-be98-49514f48f757.png)
 
-### Creation of Genesis Block
+### Creation of Genesis Block -- (From src>chainparams.cpp)
+![genesis](https://user-images.githubusercontent.com/15258611/142967796-dab5b4a0-4121-429d-af29-9fc58e6ea7c1.png)
 
-### Mining
+### SHA256 Hash Function -- (From src>hash.h)
+![sha256](https://user-images.githubusercontent.com/15258611/142968387-d4863fdb-d5e6-42b7-85fd-42c7ed174e62.png)
+
+### Mining: Nonce guess incrementation -- (From src>miner.cpp)
+![Mining](https://user-images.githubusercontent.com/15258611/142966827-a2c33b27-936d-4319-8c36-e6970d1b9f74.png)
 
 ## Screenshot
 The following screenshot shows an example run with a set difficulty of 2^240. This example consists of 5 miners (B, C, D, E & F).
