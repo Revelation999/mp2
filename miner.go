@@ -25,7 +25,7 @@ func (m Miner) Mine(l Logger) {
 		//fmt.Println(hashOutput)
 		//fmt.Println(m.block.blockHeader.bits)
 		if Compare(hashOutput[:], m.block.blockHeader.bits[:]) < 0 {
-			m.block = newBlock(i, m.identity, l.block)
+			m.block = NewBlock(i, m.identity, l.block)
 			m.currBlockHash = sha256.Sum256(HeaderToByteSlice(l.block.blockHeader))
 			*l.mailbox <- Message{m.identity, i, m.block}
 		}

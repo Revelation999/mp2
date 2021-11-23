@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
 	"crypto/sha256"
 	"fmt"
-	"math"
 	"time"
-	"unsafe"
 )
 
 type Logger struct {
@@ -15,7 +12,7 @@ type Logger struct {
 	mailbox       *chan Message
 }
 
-func newBlock(nonce int, provider string, prevBlock Block) Block {
+func NewBlock(nonce int, provider string, prevBlock Block) Block {
 	var prevBlockHashPointer HashPointer
 	prevBlockHashPointer.hash = sha256.Sum256(HeaderToByteSlice(prevBlock.blockHeader)) // should we include the transaction?
 	prevBlockHashPointer.ptr = &prevBlock
@@ -31,7 +28,7 @@ func newBlock(nonce int, provider string, prevBlock Block) Block {
 }
 
 func (l *Logger) UpdateBlock(nonce int, provider string, miners []Miner) {
-	l.block = newBlock(nonce, provider, l.block)
+	l.block = NewBlock(nonce, provider, l.block)
 	puzzlesolvedin := time.Since(newpuzzle).Seconds()
 	newpuzzle = time.Now()
 	fmt.Println("It took ", puzzlesolvedin, " seconds to solve the puzzle.")
@@ -42,9 +39,6 @@ func (l *Logger) UpdateBlock(nonce int, provider string, miners []Miner) {
 	fmt.Println(l.currBlockHash, "\n")
 	for i := 0; i < len(miners); i++ {
 		*miners[i].mailbox <- l.block
-	}
-	for len(*l.mailbox) > 0 {
-		<-*l.mailbox
 	}
 }
 
@@ -72,60 +66,4 @@ func (l Logger) ListenForUpdate(miners []Miner) {
 			break
 		}
 	}
-}
-
-func HeaderToByteSlice(header BlockHeader) []byte {
-	var slice []byte
-	slice = append(slice, IntToByteSlice(header.version)...)
-	slice = append(slice, header.prevBlockHashPointer.hash[:]...)
-	slice = append(slice, Int64ToByteSlice(int64(uintptr(unsafe.Pointer(header.prevBlockHashPointer.ptr))))...)
-	//do we really need the pointer in the hash?
-	slice = append(slice, header.merkleRootHashFiller...)
-	slice = append(slice, IntToByteSlice(header.time)...)
-	slice = append(slice, header.bits[:]...)
-	slice = append(slice, IntToByteSlice(header.nonce)...)
-	return slice
-}
-
-func IntToByteSlice(num int) []byte {
-	var slice []byte
-	if num == 0 {
-		return append(slice, 0)
-	}
-	for true {
-		if num > 0 {
-			slice = append([]byte{byte(num % 256)}, slice...)
-			num /= 256
-		} else {
-			break
-		}
-	}
-	return slice
-}
-
-func Int64ToByteSlice(num int64) []byte {
-	var slice []byte
-	if num == 0 {
-		return append(slice, 0)
-	}
-	for true {
-		if num > 0 {
-			slice = append([]byte{byte(num % 256)}, slice...)
-			num /= 256
-		} else {
-			break
-		}
-	}
-	return slice
-}
-
-func Compare(a, b []byte) int {
-	for i := 0; i < int(math.Abs(float64(len(a)-len(b)))); i++ {
-		if len(a) < len(b) {
-			a = append([]byte{0}, a...)
-		} else {
-			b = append([]byte{0}, b...)
-		}
-	}
-	return bytes.Compare(a, b)
 }
