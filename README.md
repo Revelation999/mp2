@@ -40,17 +40,14 @@ Our program accounts for the Byzantine fault of a miner sending a bogus solution
 
 ## Similarities to the Official Bitcoin Repository
 
-### Block Headers
+### Block Headers -- (From src>chain.h)
 ![blockheader](https://user-images.githubusercontent.com/15258611/142967019-4730c17c-e27d-4d4e-be98-49514f48f757.png)
-(From src>chain.h)
 
-### Creation of Genesis Block
+### Creation of Genesis Block -- (From src>chainparams.cpp)
 ![genesis](https://user-images.githubusercontent.com/15258611/142967796-dab5b4a0-4121-429d-af29-9fc58e6ea7c1.png)
-(From src>chainparams.cpp)
 
-### Mining: Nonce guess incrementation
+### Mining: Nonce guess incrementation -- (From src>miner.cpp)
 ![Mining](https://user-images.githubusercontent.com/15258611/142966827-a2c33b27-936d-4319-8c36-e6970d1b9f74.png)
-(From src>miner.cpp)
 
 ## Screenshot
 The following screenshot shows an example run with a set difficulty of 2^240. This example consists of 5 miners (B, C, D, E & F).
