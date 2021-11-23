@@ -47,6 +47,8 @@ func PrettyPrintBlock(blocktoprint *Block) {
 	fmt.Println(" | bits:    \t\t", blocktoprint.blockHeader.bits)
 	fmt.Println(" | nonce:   \t\t", blocktoprint.blockHeader.nonce)
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
+	fmt.Println(" | transaction: \t", blocktoprint.transaction)
+	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 }
 
 // initializes logger and miner

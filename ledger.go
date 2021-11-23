@@ -26,7 +26,7 @@ func newBlock(nonce int, provider string, prevBlock Block) Block {
 	newHeader.time = int(time.Now().Unix())
 	newHeader.bits = prevBlock.blockHeader.bits
 	newHeader.nonce = nonce
-	transaction := "Coin given to " + provider
+	transaction := "Coin given to Miner " + provider
 	return Block{newHeader, transaction}
 }
 
