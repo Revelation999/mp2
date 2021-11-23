@@ -17,6 +17,14 @@ Authors: Steve Huang, Asher Kang, Maria Ringes.
 
 ### Tamper-resistant Log (Blockchain)
 
+### Supported Faulty Behavior 
+
+#### Byzantine (Bogus solution)
+
+Our program accounts for the Byzantine fault of a miner sending a bogus solution to the logger. The logger's CheckNonce() function returns a boolean false value of 0 if the miner's proposed solution does not solve the puzzle.
+
+#### Crash Stop 
+
 ## Screenshots 
 
 ## Workflow
