@@ -47,7 +47,7 @@ func PrettyPrintBlock(blockToPrint *Block) {
 	fmt.Println(" | bits:    \t\t", blockToPrint.blockHeader.bits)
 	fmt.Println(" | nonce:   \t\t", blockToPrint.blockHeader.nonce)
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
-	fmt.Println(" | transaction: \t", blocktoprint.transaction)
+	fmt.Println(" | transaction: \t", blockToprint.transaction)
 	fmt.Println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -")
 }
 
