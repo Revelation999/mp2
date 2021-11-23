@@ -12,6 +12,7 @@ var miners []Miner
 
 const TimeLimit = 300_000_000_000 // sets mining time limit to 5 minutes (300,000,000,000 nanoseconds)
 
+var newpuzzle time.Time
 var start time.Time
 
 func Genesis(emptyBlock *Block) Block {
@@ -55,7 +56,13 @@ func initializeBlockchain() (int, Block) {
 	genesisBlock := Genesis(&emptyBlock)
 	fmt.Println("The first block has been created.")
 	PrettyPrintBlock(&genesisBlock)
-	minerLength := 3
+	fmt.Println("How many miners would you like to simulate? Please enter an integer value not equal to 0.")
+    var minerLength int
+    fmt.Scanln(&minerLength)
+	for minerLength<=0{
+		fmt.Println("Please enter a valid number of miners.")
+		fmt.Scanln(&minerLength)
+	}
 	logChannel := make(chan Message, 1000000)
 	mineChannels := make([]chan Block, minerLength)
 
@@ -84,6 +91,7 @@ func initializeBlockchain() (int, Block) {
 // initiate mining process
 func startMining(minerLength int, genesisBlock Block) {
 	start = time.Now()
+	newpuzzle = time.Now()
 	fmt.Println("\nMiners will now attempt to solve the puzzle given the following hash value:")
 	fmt.Println(sha256.Sum256(HeaderToByteSlice(genesisBlock.blockHeader)), "\n")
 	go logger.ListenForUpdate(miners)

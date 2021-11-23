@@ -32,6 +32,9 @@ func newBlock(nonce int, provider string, prevBlock Block) Block {
 
 func (l *Logger) UpdateBlock(nonce int, provider string, miners []Miner) {
 	l.block = newBlock(nonce, provider, l.block)
+	puzzlesolvedin := time.Since(newpuzzle).Seconds()
+	newpuzzle = time.Now()
+	fmt.Println("It took ", puzzlesolvedin, " seconds to solve the puzzle.")
 	fmt.Println("The following block has been added to the blockchain: ")
 	PrettyPrintBlock(&l.block)
 	l.currBlockHash = sha256.Sum256(HeaderToByteSlice(l.block.blockHeader))
