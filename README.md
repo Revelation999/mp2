@@ -31,6 +31,14 @@ Our program accounts for the Byzantine fault of a miner sending a bogus solution
 
 #### Crash Stop 
 
+## Similarities to the Official Bitcoin Repository
+
+### Block Headers
+
+### Creation of Genesis Block
+
+### Mining
+
 ## Screenshots 
 
 ## Workflow
