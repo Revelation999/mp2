@@ -13,7 +13,9 @@ Change the current directory into the recently cloned `mp2` folder. Start the Bi
 
 
 #### Step 3: Interact with Command Line
+A) What would you like to set the difficulty level to? This asks the user to enter an `n` value between 0 and 32 such that the difficulty level is set to 2^(256-8n). The larger the value `n`, the smaller the difficulty level will be. A smaller difficulty level will make the puzzle harder for the miners to solve.
 
+B) How many miners would you like to simulate? This asks the user to enter an integer value greater than 0.
 
 ## Specification of Program Behavior
 
