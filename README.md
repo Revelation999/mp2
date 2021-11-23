@@ -15,6 +15,8 @@ Authors: Steve Huang, Asher Kang, Maria Ringes.
 
 ### Puzzle Solving (Mining)
 
+### Tamper-resistant Log
+
 ## Screenshots 
 
 ## Workflow
