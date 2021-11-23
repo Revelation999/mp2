@@ -44,6 +44,8 @@ The following screenshot shows an example run with a set difficulty of 2^240. Th
 <img width="1113" alt="Screen Shot 2021-11-22 at 8 59 48 PM" src="https://user-images.githubusercontent.com/60116121/142960948-c31c652b-dfdb-4967-9712-397ee753a11a.png">
 
 ## Workflow
+![MP2 - Main Workflow](https://user-images.githubusercontent.com/60116121/142963455-08cd1f29-0789-4d64-9d5b-04bc609093ea.png)
+
 
 ## Custom Data Structures
 ```go
