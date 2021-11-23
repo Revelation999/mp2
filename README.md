@@ -78,3 +78,4 @@ type Logger struct {
 - `2`: External package function error
 
 ## References 
+Include notes about the crypto package we used 
