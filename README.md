@@ -8,27 +8,12 @@ Authors: Steve Huang, Asher Kang, Maria Ringes.
 #### Step 1: Clone Git Repository
 Clone the following git repository with `git clone https://github.com/standardrhyme/mp2`.
 
-#### Step 2: Initialize Gossip Protocol
-Change the current directory into the recently cloned `mp1` folder. Start the Gossip protocol with `go run mp1`. 
+#### Step 2: Begin Bitcoin/Blockchain Implementation
+Change the current directory into the recently cloned `mp2` folder. Start the Bitcoin/Blockchain protocol with `go run mp2`. 
 
-###### If an error of the following form (plot.go:7:2: cannot find package "github.com/go-echarts/go-echarts/v2/charts" in any of: /usr/local/Cellar/go/1.17/...) is triggered, run `export GO111MODULE=on`.
-
-###### If an error of the following form (cannot find package "mp1") is triggered, start the gossip protocol with `go run .`
 
 #### Step 3: Interact with Command Line
-A) Enter the Integer Code corresponding to the type of Gossip protocol you wish to implement, and press `ENTER`.
- - `1`: Push
- - `2`: Pull
- - `3`: Push/Pull Original
- - `4`: Push/Pull Switch
 
-If you wish to quit the program, enter `q` or `Q`.
-
-B) Next, enter a postive integer value of the number of nodes you want your system to test, and press `ENTER`. 
-
-C) Lastly, enter whether you wish to print out in your terminal the infection results of each Gossip round, and press `ENTER`.
-- `Y`: Yes
-- `N`: No
 
 ## Specification of Program Behavior
 
