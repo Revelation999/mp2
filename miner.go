@@ -22,8 +22,6 @@ func (m Miner) Mine(l Logger) {
 			i = 1
 		}
 		hashOutput := sha256.Sum256(append(m.currBlockHash[:], IntToByteSlice(i)...))
-		//fmt.Println(hashOutput)
-		//fmt.Println(m.block.blockHeader.bits)
 		if Compare(hashOutput[:], m.block.blockHeader.bits[:]) < 0 {
 			m.block = NewBlock(i, m.identity, l.block)
 			m.currBlockHash = sha256.Sum256(HeaderToByteSlice(l.block.blockHeader))
