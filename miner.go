@@ -13,6 +13,11 @@ type Miner struct {
 	currBlockHash [32]byte
 }
 
+/*
+	@input l Logger // The logger of the blockchain
+	Mine is a function that will continuous try different nonce values for the given puzzle.
+	This function will also check if the miner needs to update the current puzzle block.
+*/
 func (m Miner) Mine(l Logger) {
 	fmt.Println("Miner " + m.identity + " has begun mining.")
 	i := 1
