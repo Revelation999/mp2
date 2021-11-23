@@ -41,6 +41,10 @@ func (m Miner) Mine(l Logger) {
 	}
 }
 
+/*
+	@output bool // A boolean value that will tell whether the miner needs to update the block associated with the puzzle it is currently working on.
+	HasUpdate is a function of a miner that will check whether the miner has been sent any updated block from the Logger
+*/
 func (m *Miner) HasUpdate() bool {
 	select {
 	case block := <-*m.mailbox:
