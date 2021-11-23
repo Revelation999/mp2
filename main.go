@@ -20,9 +20,16 @@ func Genesis(emptyBlock *Block) Block {
 	for i := 0; i < 32; i++ {
 		hash[i] = byte(rand.Intn(256))
 	}
+	fmt.Println("What would you like to set the difficulty level to? Enter n (0 < n < 32) in 2^(256-8(n)): ")
+    var difficultyint int
+	fmt.Scanln(&difficultyint)
+	for difficultyint > 32 || difficultyint < 0{
+		fmt.Println("Please enter a valid n value for the difficulty (0 < n < 32).")
+		fmt.Scanln(&difficultyint)
+	}
 	var difficulty [32]byte
 	for i := 0; i < 32; i++ {
-		if i != 2 {
+		if i != difficultyint {
 			difficulty[i] = 0
 		} else {
 			difficulty[i] = 1
