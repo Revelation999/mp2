@@ -65,7 +65,7 @@ func initializeBlockchain() (int, Block) {
 	genesisBlock := Genesis(&emptyBlock)
 	fmt.Println("The first block has been created.")
 	PrettyPrintBlock(&genesisBlock)
-	fmt.Println("How many miners would you like to simulate? Please enter an integer value greater than 0.")
+	fmt.Println("How many miners would you like to simulate? Please enter an integer value greater than or equal to 0.")
     var minerLength int
     fmt.Scanln(&minerLength)
 	for minerLength<=0{

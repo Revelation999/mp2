@@ -25,6 +25,7 @@ func (m Miner) Mine(l Logger) {
 		if Compare(hashOutput[:], m.block.blockHeader.bits[:]) < 0 {
 			m.block = NewBlock(i, m.identity, l.block)
 			m.currBlockHash = sha256.Sum256(HeaderToByteSlice(l.block.blockHeader))
+			fmt.Print("Miner "+m.identity+" has proposed a nonce. ")
 			*l.mailbox <- Message{m.identity, i, m.block}
 		}
 		i++
