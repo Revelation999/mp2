@@ -33,7 +33,7 @@ The Miners have 2 methods that define their behavior.
 1) `Mine()` runs in a `Go-routine` and houses the main life-cycle of the miner. It calls `HasUpdate()` to check for new blocks from the logger. It repeatedly tries int values as a nonce to solve the puzzle, starting with value 1 and incrementing by 1. Finally, it terminates if the blockchain has been preserved for 5 minutes. 
 2) `HasUpdate()` checks the miner’s channel for a new block sent from the logger. If it has received a new block, the method returns true. Otherwise, it returns false. 
 
-
+At the beginning of the program, the user inputs the difficulty of the mining puzzles. This difficulty is represented as the `bits` value in each `BlockHeader`. At the creation of a new block, each miner is notified by the logger of this new block and the beginning of a new puzzle. Each miner begins guessing a nonce value whose combined hash value with its `BlockHeader` hash value matches the target difficulty level. 
 
 ### Supported Faulty Behavior 
 
