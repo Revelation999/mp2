@@ -19,12 +19,11 @@ B) **Number of Miners** -- The program will ask the user how many miners to simu
 ## Specification of Program Behavior
 
 ### Logger and Tamper-Resistant Log (Blockchain)
-The Logger has 4 methods that define its behavior. 
+The Logger has 3 methods that define its behavior. 
 
-1) `newBlock()` appends the newly approved block onto the blockchain. 
-2) `UpdateBlock()` creates the next to-be-solved block on the blockchain and sends it to all the miners to be mined. 
-3) `CheckNonce()` confirms whether the proposed puzzle solution fits the target difficulty value. 
-4) `ListenForUpdate()` runs in a `Go-routine` and calls `CheckNonce()` on any proposed puzzle solution that is sent by a miner into the logger’s channel. 
+1) `UpdateBlock()` creates the next to-be-solved block on the blockchain and sends it to all the miners to be mined. 
+2) `CheckNonce()` confirms whether the proposed puzzle solution fits the target difficulty value. 
+3) `ListenForUpdate()` runs in a `Go-routine` and calls `CheckNonce()` on any proposed puzzle solution that is sent by a miner into the logger’s channel. 
 
 ### Miners and Mining (Puzzle Solving)
 The Miners have 2 methods that define their behavior.
