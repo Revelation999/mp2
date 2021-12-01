@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"math/rand"
+	"runtime"
 	"time"
 )
 
@@ -26,20 +27,20 @@ func Genesis(emptyBlock *Block) Block {
 		hash[i] = byte(rand.Intn(256))
 	}
 	fmt.Println("What would you like to set the difficulty level to? Enter n (0 < n < 32) in 2^(256-8(n)): ")
-    var difficultyint int
+	var difficultyint int
 	fmt.Scanln(&difficultyint)
-	for difficultyint > 32 || difficultyint < 0{
+	for difficultyint > 32 || difficultyint < 0 {
 		fmt.Println("Please enter a valid n value for the difficulty (0 < n < 32).")
 		fmt.Scanln(&difficultyint)
 	}
 	var difficulty [32]byte
-	for i := 0; i < 32; i++ {
-		if i != difficultyint {
-			difficulty[i] = 0
-		} else {
-			difficulty[i] = 1
-		}
-	}
+	//for i := 0; i < 32; i++ {
+	//	if i != difficultyint {
+	//		difficulty[i] = 0
+	//	} else {
+	//		difficulty[i] = 1
+	//	}
+	//}
 	hashPointer := HashPointer{hash, emptyBlock}
 	newHeader := BlockHeader{1,
 		hashPointer,
@@ -80,9 +81,9 @@ func initializeBlockchain() (int, Block) {
 	fmt.Println("The first block has been created.")
 	PrettyPrintBlock(&genesisBlock)
 	fmt.Println("How many miners would you like to simulate? Please enter an integer value greater than or equal to 0.")
-    var minerLength int
-    fmt.Scanln(&minerLength)
-	for minerLength<=0{
+	var minerLength int
+	fmt.Scanln(&minerLength)
+	for minerLength <= 0 {
 		fmt.Println("Please enter a valid number of miners.")
 		fmt.Scanln(&minerLength)
 	}
@@ -129,6 +130,8 @@ func startMining(minerLength int, genesisBlock Block) {
 }
 
 func main() {
+	fmt.Printf("Max GMP value is %d", MaxParallelism())
+	runtime.GOMAXPROCS() // Set GMP value for experiment
 	minerLength, genesisBlock := initializeBlockchain()
 	startMining(minerLength, genesisBlock)
 }
